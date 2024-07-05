@@ -24,20 +24,56 @@ export const getVm = (req: Request, res: Response) => {
 };
 
 export const createVm = (req: Request, res: Response) => {
-	const { name, status } = req.body;
-	db.run('INSERT INTO vm (name, status) VALUES (?, ?)', [name, status], function (err) {
+	// Extract all fields from req.body
+	const vm = req.body as VirtualMachine;
+
+	// Check if the request body is empty
+	if (Object.keys(vm).length === 0) {
+        res.status(400).json({ error: "No data provided" });
+        return;
+    }
+
+	// Extract all keys and values from the request body
+	const keys = Object.keys(vm);
+	const values = Object.values(vm);
+
+	// Construct the SQL query dynamically
+	const valuePlaceholders = keys.map(() => '?').join(', ');
+	const columns = keys.join(', ');
+	const sql = `INSERT INTO vm (${columns}) VALUES (${valuePlaceholders})`;
+
+	db.run(sql, values, function (err) {
 		if (err) {
 			res.status(500).json({ error: err.message });
 			return;
 		}
-		res.status(201).json({ id: this.lastID, name, status });
+		// Construct the response object dynamically
+		const response: { [key: string]: any } = { id: this.lastID };
+		keys.forEach((key, index) => {
+			response[key] = values[index];
+		});
+		res.status(201).json(response);
 	});
 };
 
 export const updateVm = (req: Request, res: Response) => {
 	const id = req.params.id;
-	const { name, status } = req.body;
-	db.run('UPDATE vm SET name = ?, status = ? WHERE id = ?', [name, status, id], function (err) {
+	// Extract all fields from req.body
+	const updates = req.body as Partial<VirtualMachine>;
+	const updateKeys = Object.keys(updates).filter(key => key !== 'id'); // Exclude the id field from the update
+
+	if (updateKeys.length === 0) {
+		res.status(400).json({ error: 'No update fields provided' });
+		return;
+	}
+
+	// Construct the SQL query dynamically
+	const setClause = updateKeys.map(key => `${key} = ?`).join(', ');
+	const values = updateKeys.map(key => updates[key as keyof Partial<VirtualMachine>]);
+
+	const sql = `UPDATE vm SET ${setClause} WHERE id = ?`;
+
+	db.run(sql, [...values, id], function (err) {
 		if (err) {
 			res.status(500).json({ error: err.message });
 			return;

@@ -19,3 +19,8 @@ npm-debug.log*
 # Editor directories and files
 .idea/
 *.swp
+
+# Database
+*.sqlite
+*.db
+*.sql
