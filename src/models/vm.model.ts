@@ -12,6 +12,7 @@ export interface VirtualMachine {
 	reservedTo?: Date;
 	operatingSystem?: string;
 	cpuCores?: number;
+	gpu?: string;
 	ram?: number;
 	disk?: number;
 	createdAt?: Date;

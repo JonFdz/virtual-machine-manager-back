@@ -18,6 +18,7 @@ db.serialize((): void => {
         reservedTo TEXT, -- y se recomienda almacenar las fechas en formato ISO8601 (YYYY-MM-DD HH:MM:SS.SSS)
         operatingSystem TEXT,
         cpuCores INTEGER,
+		gpu TEXT,
         ram INTEGER,
         disk INTEGER,
         createdAt TEXT,
