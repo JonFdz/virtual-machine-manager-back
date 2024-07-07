@@ -13,6 +13,7 @@ db.serialize((): void => {
         environment TEXT,
         status TEXT NOT NULL,
         comment TEXT,
+		reservedUserName TEXT,
         reservedFrom TEXT, -- SQLite no tiene un tipo específico de fecha, por lo que se usa TEXT
         reservedTo TEXT, -- y se recomienda almacenar las fechas en formato ISO8601 (YYYY-MM-DD HH:MM:SS.SSS)
         operatingSystem TEXT,

@@ -7,6 +7,7 @@ export interface VirtualMachine {
 	environment?: string;
 	status: string;
 	comment?: string;
+	reservedUserName?: string;
 	reservedFrom?: Date;
 	reservedTo?: Date;
 	operatingSystem?: string;
