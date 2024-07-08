@@ -2,14 +2,14 @@
 
 A simple backend to manage virtual machines.
 
-## Configuración
+## Configuration
 
-### Requisitos Previos
+### Prerequisites
 
-- Node.js v14+
-- npm v6+
+- Node.js >=14
+- npm >=6
 
-### Instalación
+### Instalation
 
 1. Clone the repository:
    ```sh
