@@ -7,9 +7,9 @@ export interface VirtualMachine {
 	environment?: string;
 	status: string;
 	comment?: string;
-	reservedUserName?: string;
-	reservedFrom?: Date;
-	reservedTo?: Date;
+	reservedUserName?: string | null;
+	reservedFrom?: Date | null;
+	reservedTo?: Date | null;
 	operatingSystem?: string;
 	cpuCores?: number;
 	gpu?: string;
